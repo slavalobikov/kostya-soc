@@ -12,23 +12,25 @@ import base from './base'
 class App extends React.Component{
 
     state = {
+        allUsers: {},
         burgers: {},
-        order: {}
+        order: {},
     };
 
     componentDidMount(){
-
-        const newState = {
-            ...this.state,
-            burgers: sampleBurgers
-        }
-
         this.ref = base.syncState(`MySoc/burgers`, {
             context: this,
             state: 'burgers'
         })
-
+        const newState = {
+            ...this.state,
+            burgers: sampleBurgers
+        }
         this.setState(newState);
+    }
+
+    componentDidUpdate(){
+        console.log(this.state)
     }
 
     componentWillUnmount(){
@@ -36,11 +38,28 @@ class App extends React.Component{
     }
 
     render(){
+
+        const clickRegisterButton = (userName, userEmail, userPassword) => {
+            
+            this.ref = base.syncState(`MySoc/allUsers`, {
+                context: this,
+                state: 'allUsers'
+            })
+            const newPerson = {
+                userName: userName,
+                userEmail: userEmail,
+                userPassword: userPassword
+              }
+            const allUsers = {...this.state.allUsers};
+            allUsers[new Date().valueOf()] = newPerson;
+            this.setState({allUsers});
+          }
+
         return (
             <BrowserRouter>
                 <Route exact path="/"><Home /></Route>
                 <Route path="/login"><Login/></Route>
-                <Route path="/register"><Register /></Route>
+                <Route path="/register"><Register clickRegisterButton={clickRegisterButton} /></Route>
                 <Route path="/messenger"><Messenger /></Route>
                 <Route path="/profile"><Profile /></Route>
             </BrowserRouter>

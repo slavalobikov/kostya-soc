@@ -8,7 +8,7 @@ export default function Topbar() {
     <div className="topbarContainer">
       <div className="topbarLeft">
         <NavLink to="/Profile">
-          <span className="logo">Lamasocial</span>
+          <span className="logo">MySoc</span>
         </NavLink>
       </div>
       <div className="topbarCenter">
