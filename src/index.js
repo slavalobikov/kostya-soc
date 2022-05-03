@@ -1,6 +1,10 @@
 import React from 'react';
-import {render} from 'react-dom';
-import Router from './components/Router';
-import './css/style.css';
+import ReactDOM from 'react-dom';
+import App from './App';
 
-render(<Router />, document.querySelector('#root'));
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root')
+);
