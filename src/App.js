@@ -7,20 +7,23 @@ import { BrowserRouter, Route} from 'react-router-dom';
 import sampleBurgers from './sample-burgers'
 import React from 'react'
 import base from './base'
-
+import { Posts } from "./dummyData";
 
 class App extends React.Component{
 
     state = {
         allUsers: {},
-        burgers: {},
-        order: {},
+        currentPerson: {},
     };
 
     componentDidMount(){
         this.ref = base.syncState(`MySoc/allUsers`, {
             context: this,
             state: 'allUsers'
+        })
+        this.ref = base.syncState(`MySoc/currentPerson`, {
+            context: this,
+            state: 'currentPerson'
         })
     }
 
@@ -38,20 +41,46 @@ class App extends React.Component{
             const newPerson = {
                 userName: userName,
                 userEmail: userEmail,
-                userPassword: userPassword
-              }
+                userPassword: userPassword,
+                posts: Posts
+                }
             const allUsers = {...this.state.allUsers};
             allUsers[new Date().valueOf()] = newPerson;
             this.setState({allUsers});
-          }
+            const currentPerson = {...newPerson};
+            this.setState({currentPerson});
+        }
+
+
+        // double click to enter!!!
+        const clickLoginButton = (thisUserEmail, thisUserPassword) => {
+            const users = this.state.allUsers;
+            let loginFlag = true;
+            for (var id in users) {
+                if(users[id]['userEmail'] == thisUserEmail && users[id]['userPassword'] == thisUserPassword){
+                    loginFlag = false;
+                    const currentPerson = {...users[id]};
+                    this.setState({currentPerson});
+                    break;
+                }
+            }
+            if(loginFlag){
+                alert('Email или Password введен неправильно...')
+            }
+        }
 
         return (
             <BrowserRouter>
                 <Route exact path="/"><Home /></Route>
-                <Route path="/login"><Login/></Route>
+                <Route path="/login">
+                    <Login 
+                        clickLoginButton={clickLoginButton} 
+                        currentPerson={this.state.currentPerson['userEmail']} 
+                    />
+                </Route>
                 <Route path="/register"><Register clickRegisterButton={clickRegisterButton} /></Route>
                 <Route path="/messenger"><Messenger /></Route>
-                <Route path="/profile"><Profile /></Route>
+                <Route path="/profile"><Profile posts={this.state.currentPerson.posts}/></Route>
             </BrowserRouter>
           )
     }

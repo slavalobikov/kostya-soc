@@ -5,7 +5,7 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import Feed from "../../components/feed/Feed";
 import Rightbar from "../../components/rightbar/Rightbar";
 
-export default function Profile() {
+export default function Profile(props) {
   return (
     <>
       <Topbar />
@@ -31,7 +31,7 @@ export default function Profile() {
             </div>
           </div>
           <div className="profileRightBottom">
-            <Feed />
+            <Feed posts={props.posts}/>
             <Rightbar profile/>
           </div>
         </div>

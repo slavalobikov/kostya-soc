@@ -3,7 +3,8 @@ import "./topbar.css";
 import { Search, Person, Chat, Notifications } from "@material-ui/icons";
 import {NavLink} from 'react-router-dom';
 
-export default function Topbar() {
+export default function Topbar(props) {
+
   return (
     <div className="topbarContainer">
       <div className="topbarLeft">
