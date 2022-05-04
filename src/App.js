@@ -18,15 +18,10 @@ class App extends React.Component{
     };
 
     componentDidMount(){
-        this.ref = base.syncState(`MySoc/burgers`, {
+        this.ref = base.syncState(`MySoc/allUsers`, {
             context: this,
-            state: 'burgers'
+            state: 'allUsers'
         })
-        const newState = {
-            ...this.state,
-            burgers: sampleBurgers
-        }
-        this.setState(newState);
     }
 
     componentDidUpdate(){
@@ -40,11 +35,6 @@ class App extends React.Component{
     render(){
 
         const clickRegisterButton = (userName, userEmail, userPassword) => {
-            
-            this.ref = base.syncState(`MySoc/allUsers`, {
-                context: this,
-                state: 'allUsers'
-            })
             const newPerson = {
                 userName: userName,
                 userEmail: userEmail,
