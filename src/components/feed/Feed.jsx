@@ -10,8 +10,14 @@ export default function Feed(props) {
     <div className="feed">
       <div className="feedWrapper">
         <Share onClickShare={props.onClickShare}/>
-        {props.posts ? props.posts.map((p) => (
-          <Post key={p.id} post={p} />
+        {props.posts ? props.posts.map((p, index) => (
+          <Post 
+            index={index} 
+            key={p.id} 
+            post={p} 
+            onClickDelBut={props.onClickDelBut}
+            onClickLike={props.onClickLike} 
+          />
         )) : null}
       </div>
     </div>

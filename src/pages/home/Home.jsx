@@ -11,7 +11,11 @@ export default function Home(props) {
       <Topbar onClickTopbarImg={props.onClickTopbarImg}/>
       <div className="homeContainer">
         <Sidebar />
-        <Feed posts={props.posts}/>
+        <Feed 
+          posts={props.posts} 
+          onClickDelBut={props.onClickDelBut}
+          onClickLike={props.onClickLike}
+        />
         <Rightbar/>
       </div>
     </>

@@ -6,6 +6,7 @@ import Feed from "../../components/feed/Feed";
 import Rightbar from "../../components/rightbar/Rightbar";
 
 export default function Profile(props) {
+
   return (
     <>
       <Topbar onClickTopbarImg={props.onClickTopbarImg} />
@@ -31,7 +32,12 @@ export default function Profile(props) {
             </div>
           </div>
           <div className="profileRightBottom">
-            <Feed onClickShare={props.onClickShare} posts={props.posts}/>
+            <Feed 
+              onClickShare={props.onClickShare} 
+              posts={props.posts}
+              onClickDelBut={props.onClickDelBut}
+              onClickLike={props.onClickLike}
+            />
             <Rightbar profile/>
           </div>
         </div>

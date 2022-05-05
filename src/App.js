@@ -97,12 +97,36 @@ class App extends React.Component{
             this.setState({currentPerson});
         }
 
+        const onClickDelBut = (e) => {
+            const userId = this.state.currentPerson.userId;
+            let newPosts = this.state.currentPerson.posts;
+            newPosts.splice(e.currentTarget.getAttribute("index"), 1);
+            const currentPerson = {...this.state.currentPerson, posts: newPosts};
+            this.setState({currentPerson});
+            const newPerson = {...this.state.allUsers[userId], posts: newPosts};
+            const allUsers = { ...this.state.allUsers, [userId]: newPerson }
+            this.setState({allUsers});
+        }
+
+        const onClickLike = (e, like) => {
+            const userId = this.state.currentPerson.userId;
+            let newPosts = this.state.currentPerson.posts;
+            newPosts[e.currentTarget.getAttribute("index")].like = like;
+            const currentPerson = {...this.state.currentPerson, posts: newPosts}
+            this.setState({currentPerson});
+            const newPerson = {...this.state.allUsers[userId], posts: newPosts};
+            const allUsers = { ...this.state.allUsers, [userId]: newPerson }
+            this.setState({allUsers});
+        }
+
         return (
             <BrowserRouter>
                 <Route exact path="/">
                     <Home 
                         onClickTopbarImg={onClickTopbarImg}
                         posts={this.state.currentPerson.posts}
+                        onClickDelBut={onClickDelBut}
+                        onClickLike={onClickLike}
                     />
                 </Route>
                 <Route path="/login">
@@ -118,6 +142,8 @@ class App extends React.Component{
                         posts={this.state.currentPerson.posts}
                         onClickTopbarImg={onClickTopbarImg}
                         onClickShare={onClickShare}
+                        onClickDelBut={onClickDelBut}
+                        onClickLike={onClickLike}
                     />
                 </Route>
             </BrowserRouter>

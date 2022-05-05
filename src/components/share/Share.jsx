@@ -12,6 +12,16 @@ export default function Share(props) {
   const[locationText, changeLocationText] = useState('');
   const[locationButtonOk, onClickLocationButtonOk] = useState(false);
 
+  const NewOnClickShare = () => {
+    props.onClickShare(shareText, sharePhotoLink, locationText);
+    changeShareText('');
+    changeSharePhotoLink('');
+    changeLocationText('');
+    onClickPhotoFlag(false);
+    onClickLocationFlag(false);
+    onClickPhotoButton(false);
+    onClickLocationButtonOk(false);
+  }
 
   return (
     <div className="share">
@@ -76,7 +86,7 @@ export default function Share(props) {
                     <span className="shareOptionText">Location</span>
                 </div>
             </div>
-            <button onClick={() => props.onClickShare(shareText, sharePhotoLink, locationText)}  className="shareButton">Share</button>
+            <button onClick={NewOnClickShare}  className="shareButton">Share</button>
         </div>
       </div>
     </div>
