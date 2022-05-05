@@ -15,7 +15,7 @@ export default function Register(props) {
         <div className="loginLeft">
           <h3 className="loginLogo">MySoc</h3>
           <span className="loginDesc">
-            Connect with friends and the world around you on Lamasocial.
+            Connect with friends and the world around you on MySoc.
           </span>
         </div>
         <div className="loginRight">

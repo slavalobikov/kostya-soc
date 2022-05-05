@@ -19,11 +19,12 @@ export default function Post({ post }) {
           <div className="postTopLeft">
             <img
               className="postProfileImg"
-              src={Users.filter((u) => u.id === post?.userId)[0].profilePicture}
+              // src={Users.filter((u) => u.id === post?.userId)[0].profilePicture}
+              src="https://sun9-62.userapi.com/s/v1/if2/32TFFh8jr3uwVTpJsyzN2uMFTsUQyZhFx5Uhif46J3lva0tqWXpbyDkarGnuJE-XpEhGzhL5lxkBjYwYKckPU3wj.jpg?size=810x1080&quality=96&type=album"
               alt=""
             />
             <span className="postUsername">
-              {Users.filter((u) => u.id === post?.userId)[0].username}
+              {/* {Users.filter((u) => u.id === post?.userId)[0].username} */}
             </span>
             <span className="postDate">{post.date}</span>
           </div>

@@ -47,7 +47,12 @@ export default function Topbar(props) {
           </div>
         </div>
         <NavLink to="/login">
-          <img src="/assets/person/1.jpeg" alt="" className="topbarImg"/>
+          <img 
+            onClick={props.onClickTopbarImg} 
+            src="https://sun9-62.userapi.com/s/v1/if2/32TFFh8jr3uwVTpJsyzN2uMFTsUQyZhFx5Uhif46J3lva0tqWXpbyDkarGnuJE-XpEhGzhL5lxkBjYwYKckPU3wj.jpg?size=810x1080&quality=96&type=album" 
+            alt="" 
+            className="topbarImg"
+          />
         </NavLink>
       </div>
     </div>

@@ -5,11 +5,11 @@ import Message from "../../components/message/Message";
 import ChatOnline from "../../components/chatOnline/ChatOnline";
 import React from 'react';
 
-export default function Messenger() {
+export default function Messenger(props) {
 
   return (
     <>
-      <Topbar />
+      <Topbar onClickTopbarImg={props.onClickTopbarImg}/>
       <div className="messenger">
         <div className="chatMenu">
           <div className="chatMenuWrapper">

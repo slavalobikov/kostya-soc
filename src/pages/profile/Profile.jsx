@@ -8,7 +8,7 @@ import Rightbar from "../../components/rightbar/Rightbar";
 export default function Profile(props) {
   return (
     <>
-      <Topbar />
+      <Topbar onClickTopbarImg={props.onClickTopbarImg} />
       <div className="profile">
         <Sidebar />
         <div className="profileRight">
@@ -16,22 +16,22 @@ export default function Profile(props) {
             <div className="profileCover">
               <img
                 className="profileCoverImg"
-                src="assets/post/3.jpeg"
+                src="https://get.wallhere.com/photo/sky-nature-wilderness-cloud-dawn-mountain-morning-highland-reflection-national-park-afterglow-tree-atmosphere-horizon-mount-scenery-evening-leaf-red-sky-at-morning-sunlight-landscape-sunrise-sunset-hill-dusk-meadow-lake-meteorological-phenomenon-mountain-range-forest-computer-wallpaper-grass-autumn-896926.jpg"
                 alt=""
               />
               <img
                 className="profileUserImg"
-                src="assets/person/7.jpeg"
+                src="https://sun9-62.userapi.com/s/v1/if2/32TFFh8jr3uwVTpJsyzN2uMFTsUQyZhFx5Uhif46J3lva0tqWXpbyDkarGnuJE-XpEhGzhL5lxkBjYwYKckPU3wj.jpg?size=810x1080&quality=96&type=album"
                 alt=""
               />
             </div>
             <div className="profileInfo">
-                <h4 className="profileInfoName">Safak Kocaoglu</h4>
+                <h4 className="profileInfoName">Kostya Krot</h4>
                 <span className="profileInfoDesc">Hello my friends!</span>
             </div>
           </div>
           <div className="profileRightBottom">
-            <Feed posts={props.posts}/>
+            <Feed onClickShare={props.onClickShare} posts={props.posts}/>
             <Rightbar profile/>
           </div>
         </div>
