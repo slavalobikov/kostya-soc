@@ -9,7 +9,7 @@ export default function Feed(props) {
   return (
     <div className="feed">
       <div className="feedWrapper">
-        <Share onClickShare={props.onClickShare}/>
+        {props.profile && <Share onClickShare={props.onClickShare}/>}
         {props.posts ? props.posts.map((p, index) => (
           <Post 
             index={index} 

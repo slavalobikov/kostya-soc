@@ -48,3 +48,49 @@
 .profileRightBottom{
     display: flex;
 }
+
+.inputPlusBtn{
+    display: flex;
+    justify-content: space-between;
+    margin: 32px 0 30px;
+    margin-left: 60px;
+}
+
+.profileInfoInputs{
+    padding: 5px;
+}
+
+.inputPlusBtnStatus{
+    margin: 0 0 0 60px;
+}
+
+.inputPlusBtnStatus>input{
+    width: 450px;
+}
+
+.inputPlusBtnCover{
+    display: flex;
+    justify-content: space-between;
+    margin: 32px 0 30px;
+    margin-left: 60px;
+    position: absolute;
+    bottom: 230px;
+    min-width: 500px;
+}
+
+.inputPlusBtnCover>input{
+    width: 100%;
+}
+
+.inputPlusBtnIcon{
+    display: flex;
+    justify-content: space-between;
+    margin: 32px 0 30px;
+    margin-left: 60px;
+    position: absolute;
+    min-width: 300px;
+}
+
+.inputPlusBtnIcon>input{
+    width: 100%;
+}

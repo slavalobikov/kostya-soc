@@ -43,7 +43,14 @@ class App extends React.Component{
                 userEmail: userEmail,
                 userPassword: userPassword,
                 userId: userId,
-                posts: Posts
+                posts: Posts,
+                userName: '',
+                status: '',
+                city: '',
+                country: '',
+                relationship: '',
+                coverUrl: '',
+                icon: '',
                 }
             const allUsers = {...this.state.allUsers};
             allUsers[userId] = newPerson;
@@ -86,10 +93,11 @@ class App extends React.Component{
                 like: 0,
                 photo: img,
                 userId: userId,
-                location: location
+                location: location,
+                posts: [],
             }
             let copyPosts = this.state.allUsers[userId].posts;
-            copyPosts.unshift(newPost);
+            copyPosts ? copyPosts.unshift(newPost) : copyPosts = [newPost];
             let allUsers = {...this.state.allUsers}
             allUsers[userId].posts = copyPosts;
             this.setState({allUsers});
@@ -119,14 +127,28 @@ class App extends React.Component{
             this.setState({allUsers});
         }
 
+        const onClickInputButton = (newText, word) => {
+            if (newText){
+                const userId = this.state.currentPerson.userId;
+                const currentPerson = {...this.state.currentPerson, [word]: newText};
+                this.setState({currentPerson});
+                const newPerson = {...this.state.allUsers[userId], [word]: newText};
+                const allUsers = { ...this.state.allUsers, [userId]: newPerson };
+                this.setState({allUsers});
+            }
+        }
+
         return (
             <BrowserRouter>
                 <Route exact path="/">
                     <Home 
                         onClickTopbarImg={onClickTopbarImg}
-                        posts={this.state.currentPerson.posts}
+                        currentPerson={this.state.currentPerson}
                         onClickDelBut={onClickDelBut}
                         onClickLike={onClickLike}
+                        onClickShare={onClickShare}
+                        onClickInputButton={onClickInputButton}
+                        allUsers={this.state.allUsers}
                     />
                 </Route>
                 <Route path="/login">
@@ -139,11 +161,13 @@ class App extends React.Component{
                 <Route path="/messenger"><Messenger onClickTopbarImg={onClickTopbarImg} /></Route>
                 <Route path="/profile">
                     <Profile 
-                        posts={this.state.currentPerson.posts}
+                        allUsers={this.state.allUsers}
+                        currentPerson={this.state.currentPerson}
                         onClickTopbarImg={onClickTopbarImg}
                         onClickShare={onClickShare}
                         onClickDelBut={onClickDelBut}
                         onClickLike={onClickLike}
+                        onClickInputButton={onClickInputButton}
                     />
                 </Route>
             </BrowserRouter>

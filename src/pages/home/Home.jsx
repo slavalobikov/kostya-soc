@@ -8,15 +8,21 @@ import "./home.css"
 export default function Home(props) {
   return (
     <>
-      <Topbar onClickTopbarImg={props.onClickTopbarImg}/>
+      <Topbar onClickTopbarImg={props.onClickTopbarImg} currentPerson={props.currentPerson} />
       <div className="homeContainer">
-        <Sidebar />
+        <Sidebar allUsers={props.allUsers} currentId={props.currentPerson.userId} />
         <Feed 
-          posts={props.posts} 
+          onClickShare={props.onClickShare} 
+          posts={props.currentPerson.posts} 
           onClickDelBut={props.onClickDelBut}
           onClickLike={props.onClickLike}
+          profile={false}
         />
-        <Rightbar/>
+        <Rightbar
+          onClickInputButton={props.onClickInputButton} 
+          currentPerson={props.currentPerson}
+          profile={false}
+        />
       </div>
     </>
   );

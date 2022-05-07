@@ -49,6 +49,8 @@
 }
 
 .rightbarInfoItem{
+  display: flex;
+  align-items: center;
   margin-bottom: 10px;
 }
 
@@ -80,4 +82,15 @@
   height: 100px;
   object-fit: cover;
   border-radius: 5px;
+}
+
+.inputPlusBtnRightbar{
+  display: flex;
+  width: 210px;
+}
+
+.inputPlusBtnRightbar>input{
+  width: 130px;
+  padding-top: 0px;
+  padding-bottom: 0px;
 }

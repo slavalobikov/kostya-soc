@@ -33,7 +33,7 @@ export default function Share(props) {
             alt="" 
           />
           <input
-            placeholder="What's in your mind Kostya?"
+            placeholder="What's in your mind?"
             className="shareInput"
             value={shareText} 
             onChange={e => changeShareText(e.currentTarget.value)} 
@@ -49,7 +49,11 @@ export default function Share(props) {
             className="sharePhotoLink" 
           />
           <span>
-            <button onClick={() => onClickPhotoButton(true)}  className="shareButton shareButtonOk">Ok</button>
+            <button 
+              onClick={() => onClickPhotoButton(true)}  
+              className="shareButton shareButtonOk">
+              Ok
+            </button>
           </span>
         </>
         }

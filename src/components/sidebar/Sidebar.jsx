@@ -1,20 +1,10 @@
 import "./sidebar.css";
 import React from 'react';
-import {
-  RssFeed,
-  Chat,
-  PlayCircleFilledOutlined,
-  Group,
-  Bookmark,
-  HelpOutline,
-  WorkOutline,
-  Event,
-  School,
-} from "@material-ui/icons";
+import { RssFeed, Chat, PlayCircleFilledOutlined, Group, Bookmark, HelpOutline, WorkOutline, Event, School} from "@material-ui/icons";
 import { Users } from "../../dummyData";
 import CloseFriend from "../closeFriend/CloseFriend";
 
-export default function Sidebar() {
+export default function Sidebar(props) {
   return (
     <div className="sidebar">
       <div className="sidebarWrapper">
@@ -59,9 +49,9 @@ export default function Sidebar() {
         <button className="sidebarButton">Show More</button>
         <hr className="sidebarHr" />
         <ul className="sidebarFriendList">
-          {Users.map((u) => (
-            <CloseFriend key={u.id} user={u} />
-          ))}
+          {Object.keys(props.allUsers).map((key) => {
+            if (key != props.currentId) return <CloseFriend key={key} user={props.allUsers[key]} />
+          })}
         </ul>
       </div>
     </div>
