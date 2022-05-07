@@ -3,23 +3,30 @@ import Post from "../post/Post";
 import Share from "../share/Share";
 import "./feed.css";
 import { Posts } from "../../dummyData";
+import StoreContext from "../../StoreContext";
 
 export default function Feed(props) {
 
   return (
-    <div className="feed">
-      <div className="feedWrapper">
-        {props.profile && <Share onClickShare={props.onClickShare}/>}
-        {props.posts ? props.posts.map((p, index) => (
-          <Post 
-            index={index} 
-            key={p.id} 
-            post={p} 
-            onClickDelBut={props.onClickDelBut}
-            onClickLike={props.onClickLike} 
-          />
-        )) : null}
+    <StoreContext.Consumer>
+    {
+      (SF) => (
+      <div className="feed">
+        <div className="feedWrapper">
+          {props.profile && <Share onClickShare={SF.onClickShare}/>}
+          {SF.currentPerson.posts ? SF.currentPerson.posts.map((p, index) => (
+            <Post 
+              index={index} 
+              key={p.id} 
+              post={p} 
+              onClickDelBut={SF.onClickDelBut}
+              onClickLike={SF.onClickLike} 
+            />
+          )) : null}
+        </div>
       </div>
-    </div>
+      )
+    }
+    </StoreContext.Consumer>
   );
 }

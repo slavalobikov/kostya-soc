@@ -7,6 +7,7 @@ import { BrowserRouter, Route} from 'react-router-dom';
 import React from 'react'
 import base from './base'
 import { Posts } from "./dummyData";
+import StoreContext from "./StoreContext";
 
 class App extends React.Component{
 
@@ -138,39 +139,32 @@ class App extends React.Component{
             }
         }
 
+        const stateAndFunc = {
+            ...this.state,
+            clickRegisterButton,
+            clickLoginButton,
+            onClickTopbarImg,
+            onClickShare,
+            onClickDelBut,
+            onClickLike,
+            onClickInputButton,
+        }
+
         return (
-            <BrowserRouter>
-                <Route exact path="/">
-                    <Home 
-                        onClickTopbarImg={onClickTopbarImg}
-                        currentPerson={this.state.currentPerson}
-                        onClickDelBut={onClickDelBut}
-                        onClickLike={onClickLike}
-                        onClickShare={onClickShare}
-                        onClickInputButton={onClickInputButton}
-                        allUsers={this.state.allUsers}
-                    />
-                </Route>
-                <Route path="/login">
-                    <Login 
-                        clickLoginButton={clickLoginButton} 
-                        currentPerson={this.state.currentPerson['userEmail']} 
-                    />
-                </Route>
-                <Route path="/register"><Register clickRegisterButton={clickRegisterButton} /></Route>
-                <Route path="/messenger"><Messenger onClickTopbarImg={onClickTopbarImg} /></Route>
-                <Route path="/profile">
-                    <Profile 
-                        allUsers={this.state.allUsers}
-                        currentPerson={this.state.currentPerson}
-                        onClickTopbarImg={onClickTopbarImg}
-                        onClickShare={onClickShare}
-                        onClickDelBut={onClickDelBut}
-                        onClickLike={onClickLike}
-                        onClickInputButton={onClickInputButton}
-                    />
-                </Route>
-            </BrowserRouter>
+            <StoreContext.Provider value={stateAndFunc}> 
+                <BrowserRouter>
+                    <Route exact path="/"><Home /></Route>
+                    <Route path="/login">
+                        <Login 
+                            clickLoginButton={clickLoginButton} 
+                            currentPerson={this.state.currentPerson['userEmail']} 
+                        />
+                    </Route>
+                    <Route path="/register"><Register clickRegisterButton={clickRegisterButton} /></Route>
+                    <Route path="/messenger"><Messenger onClickTopbarImg={onClickTopbarImg} /></Route>
+                    <Route path="/profile"><Profile /></Route>
+                </BrowserRouter>
+            </StoreContext.Provider>
           )
     }
 }

@@ -5,24 +5,14 @@ import Feed from "../../components/feed/Feed";
 import Rightbar from "../../components/rightbar/Rightbar";
 import "./home.css"
 
-export default function Home(props) {
+export default function Home() {
   return (
     <>
-      <Topbar onClickTopbarImg={props.onClickTopbarImg} currentPerson={props.currentPerson} />
+      <Topbar/>
       <div className="homeContainer">
-        <Sidebar allUsers={props.allUsers} currentId={props.currentPerson.userId} />
-        <Feed 
-          onClickShare={props.onClickShare} 
-          posts={props.currentPerson.posts} 
-          onClickDelBut={props.onClickDelBut}
-          onClickLike={props.onClickLike}
-          profile={false}
-        />
-        <Rightbar
-          onClickInputButton={props.onClickInputButton} 
-          currentPerson={props.currentPerson}
-          profile={false}
-        />
+        <Sidebar/>
+        <Feed profile={false} />
+        <Rightbar profile={false} />
       </div>
     </>
   );
