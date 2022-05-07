@@ -3,6 +3,7 @@ import Login from "./pages/login/Login";
 import Profile from "./pages/profile/Profile";
 import Register from "./pages/register/Register";
 import Messenger from "./pages/messenger/Messenger";
+import User from "./pages/user/user"
 import { BrowserRouter, Route} from 'react-router-dom';
 import React from 'react'
 import base from './base'
@@ -13,17 +14,12 @@ class App extends React.Component{
 
     state = {
         allUsers: {},
-        currentPerson: {},
     };
 
     componentDidMount(){
         this.ref = base.syncState(`MySoc/allUsers`, {
             context: this,
             state: 'allUsers'
-        })
-        this.ref = base.syncState(`MySoc/currentPerson`, {
-            context: this,
-            state: 'currentPerson'
         })
     }
 
@@ -52,12 +48,15 @@ class App extends React.Component{
                 relationship: '',
                 coverUrl: '',
                 icon: '',
+                online: false,
+                followers: [],
                 }
             const allUsers = {...this.state.allUsers};
             allUsers[userId] = newPerson;
+            allUsers[userId].online = true;
             this.setState({allUsers});
             const currentPerson = {...newPerson};
-            this.setState({currentPerson});
+            localStorage.setItem('currentPerson', JSON.stringify(currentPerson));
         }
 
         // double click to enter!!!
@@ -68,7 +67,11 @@ class App extends React.Component{
                 if(users[id]['userEmail'] == thisUserEmail && users[id]['userPassword'] == thisUserPassword){
                     loginFlag = false;
                     const currentPerson = {...users[id]};
-                    this.setState({currentPerson});
+                    console.log('currentPerson - ', currentPerson);
+                    localStorage.setItem('currentPerson', JSON.stringify(currentPerson));
+                    const allUsers = {...this.state.allUsers};
+                    allUsers[id].online = true;
+                    this.setState({allUsers});
                     break;
                 }
             }
@@ -78,12 +81,18 @@ class App extends React.Component{
         }
 
         const onClickTopbarImg = () => {
-            const currentPerson = null;
-            this.setState({currentPerson});
+            const localCurrentPerson = JSON.parse(localStorage.getItem('currentPerson'));
+            const userId = localCurrentPerson.userId;
+            const currentPerson = {};
+            localStorage.setItem('currentPerson', JSON.stringify(currentPerson));
+            const allUsers = {...this.state.allUsers};
+            allUsers[userId].online = false;
+            this.setState({allUsers});
         }
 
         const onClickShare = (desc, img, location) => {
-            const userId = this.state.currentPerson.userId;
+            const localCurrentPerson = JSON.parse(localStorage.getItem('currentPerson'));
+            const userId = localCurrentPerson.userId;
             let date = new Date();
             const newDate = date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear()+" "+date.getHours()+":"+date.getMinutes();
             const newPost = {
@@ -103,26 +112,28 @@ class App extends React.Component{
             allUsers[userId].posts = copyPosts;
             this.setState({allUsers});
             const currentPerson = this.state.allUsers[userId];
-            this.setState({currentPerson});
+            localStorage.setItem('currentPerson', JSON.stringify(currentPerson));
         }
 
         const onClickDelBut = (e) => {
-            const userId = this.state.currentPerson.userId;
-            let newPosts = this.state.currentPerson.posts;
+            const localCurrentPerson = JSON.parse(localStorage.getItem('currentPerson'));
+            const userId = localCurrentPerson.userId;
+            let newPosts = localCurrentPerson.posts;
             newPosts.splice(e.currentTarget.getAttribute("index"), 1);
-            const currentPerson = {...this.state.currentPerson, posts: newPosts};
-            this.setState({currentPerson});
+            const currentPerson = {...localCurrentPerson, posts: newPosts};
+            localStorage.setItem('currentPerson', JSON.stringify(currentPerson));
             const newPerson = {...this.state.allUsers[userId], posts: newPosts};
             const allUsers = { ...this.state.allUsers, [userId]: newPerson }
             this.setState({allUsers});
         }
 
         const onClickLike = (e, like) => {
-            const userId = this.state.currentPerson.userId;
-            let newPosts = this.state.currentPerson.posts;
+            const localCurrentPerson = JSON.parse(localStorage.getItem('currentPerson'));
+            const userId = localCurrentPerson.userId;
+            let newPosts = localCurrentPerson.posts;
             newPosts[e.currentTarget.getAttribute("index")].like = like;
-            const currentPerson = {...this.state.currentPerson, posts: newPosts}
-            this.setState({currentPerson});
+            const currentPerson = {...localCurrentPerson, posts: newPosts}
+            localStorage.setItem('currentPerson', JSON.stringify(currentPerson));
             const newPerson = {...this.state.allUsers[userId], posts: newPosts};
             const allUsers = { ...this.state.allUsers, [userId]: newPerson }
             this.setState({allUsers});
@@ -130,17 +141,45 @@ class App extends React.Component{
 
         const onClickInputButton = (newText, word) => {
             if (newText){
-                const userId = this.state.currentPerson.userId;
-                const currentPerson = {...this.state.currentPerson, [word]: newText};
-                this.setState({currentPerson});
+                const localCurrentPerson = JSON.parse(localStorage.getItem('currentPerson'));
+                const userId = localCurrentPerson.userId;
+                const currentPerson = {...localCurrentPerson, [word]: newText};
+                localStorage.setItem('currentPerson', JSON.stringify(currentPerson));
                 const newPerson = {...this.state.allUsers[userId], [word]: newText};
                 const allUsers = { ...this.state.allUsers, [userId]: newPerson };
                 this.setState({allUsers});
             }
         }
 
+        const onClickUser = (id) => {
+            const currentUser = {...this.state.allUsers[id]};
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            const localCurrentPerson = JSON.parse(localStorage.getItem('currentPerson'));
+            const userId = localCurrentPerson.userId;
+            const flag = this.state.allUsers[userId].flag;
+            const newPerson = {...this.state.allUsers[userId], flag: !flag};
+            const allUsers = { ...this.state.allUsers, [userId]: newPerson }
+            this.setState({allUsers});
+        }
+
+        const followOnUser = () => {
+            const localCurrentUser = JSON.parse(localStorage.getItem('currentUser'));
+            const userId = localCurrentUser.userId;
+            const localCurrentPerson = JSON.parse(localStorage.getItem('currentPerson'));
+            const personId = localCurrentPerson.userId;
+            let personFollowers = this.state.allUsers[personId].followers;
+            personFollowers = personFollowers ? personFollowers : [];
+            personFollowers.includes(userId) ? personFollowers.splice(personFollowers.indexOf(userId),1) : personFollowers.unshift(userId);
+            const newPerson = {...this.state.allUsers[personId], followers: personFollowers }
+            const allUsers = { ...this.state.allUsers, [personId]: newPerson }
+            localStorage.setItem('currentPerson', JSON.stringify(this.state.allUsers[personId]));
+            this.setState({allUsers});
+        }
+
         const stateAndFunc = {
             ...this.state,
+            currentPerson: JSON.parse(localStorage.getItem('currentPerson')),
+            currentUser: JSON.parse(localStorage.getItem('currentUser')),
             clickRegisterButton,
             clickLoginButton,
             onClickTopbarImg,
@@ -148,6 +187,8 @@ class App extends React.Component{
             onClickDelBut,
             onClickLike,
             onClickInputButton,
+            onClickUser,
+            followOnUser,
         }
 
         return (
@@ -157,12 +198,13 @@ class App extends React.Component{
                     <Route path="/login">
                         <Login 
                             clickLoginButton={clickLoginButton} 
-                            currentPerson={this.state.currentPerson['userEmail']} 
+                            currentPerson={JSON.parse(localStorage.getItem('currentPerson'))['userEmail']} 
                         />
                     </Route>
                     <Route path="/register"><Register clickRegisterButton={clickRegisterButton} /></Route>
                     <Route path="/messenger"><Messenger onClickTopbarImg={onClickTopbarImg} /></Route>
                     <Route path="/profile"><Profile /></Route>
+                    <Route path="/user"><User allUsers={this.state.allUsers}/></Route>
                 </BrowserRouter>
             </StoreContext.Provider>
           )

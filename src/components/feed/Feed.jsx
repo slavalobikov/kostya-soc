@@ -14,8 +14,18 @@ export default function Feed(props) {
       <div className="feed">
         <div className="feedWrapper">
           {props.profile && <Share onClickShare={SF.onClickShare}/>}
-          {SF.currentPerson.posts ? SF.currentPerson.posts.map((p, index) => (
+          {!props.user && SF.currentPerson.posts ? SF.currentPerson.posts.map((p, index) => (
             <Post 
+              index={index} 
+              key={p.id} 
+              post={p} 
+              onClickDelBut={SF.onClickDelBut}
+              onClickLike={SF.onClickLike} 
+            />
+          )) : null}
+          {props.user && SF.currentUser.posts ? SF.currentUser.posts.map((p, index) => (
+            <Post 
+              user={props.user}
               index={index} 
               key={p.id} 
               post={p} 
