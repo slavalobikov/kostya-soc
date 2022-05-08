@@ -3,7 +3,9 @@ import { MoreVert, SdCard } from "@material-ui/icons";
 import { Users } from "../../dummyData";
 import {Room} from "@material-ui/icons"
 import React, { useState } from "react";
-import StoreContext from '../../StoreContext'
+import StoreContext from '../../StoreContext';
+import moment from 'moment';
+import {NavLink} from 'react-router-dom';
 
 export default function Post(props) {
 
@@ -36,16 +38,19 @@ export default function Post(props) {
         <div className="postWrapper">
           <div className="postTop">
             <div className="postTopLeft">
-              <img
-                className="postProfileImg"
-                src={props.user ? SF.currentUser.icon : SF.currentPerson.icon}
-                alt=""
-              />
+              <NavLink className="usersLinks" to="/user">
+                <img
+                  onClick={() => SF.onClickUser(props.post.id)}
+                  className="postProfileImg"
+                  src={SF.allUsers[props.post.id] ? SF.allUsers[props.post.id].icon ? SF.allUsers[props.post.id].icon : '' : ''}
+                  alt=""
+                />
+              </NavLink>
               <span className="postUsername">
               </span>
-              <span className="postDate">{props.post.date}</span>
+              <span className="postDate">{moment(props.post.date).fromNow()}</span>
             </div>
-            {!props.user && 
+            {!props.timeline && !props.user && 
             <div className="postTopRight">
               {postTopFlag && 
                 <button 

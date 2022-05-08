@@ -11,7 +11,7 @@ export default function Home() {
       <Topbar/>
       <div className="homeContainer">
         <Sidebar/>
-        <Feed profile={false} />
+        <Feed profile={false} home/>
         <Rightbar profile={false} />
       </div>
     </>

@@ -95,7 +95,7 @@ class App extends React.Component{
             const localCurrentPerson = JSON.parse(localStorage.getItem('currentPerson'));
             const userId = localCurrentPerson.userId;
             let date = new Date();
-            const newDate = date.getDate()+"."+(date.getMonth()+1)+"."+date.getFullYear()+" "+date.getHours()+":"+date.getMinutes();
+            const newDate = (date.getMonth()+1)+"."+date.getDate()+"."+date.getFullYear()+" "+date.getHours()+":"+date.getMinutes();
             const newPost = {
                 comment: 0,
                 date: newDate,
