@@ -71,6 +71,7 @@ class App extends React.Component{
                     localStorage.setItem('currentPerson', JSON.stringify(currentPerson));
                     const allUsers = {...this.state.allUsers};
                     allUsers[id].online = true;
+                    allUsers[id].flag = !allUsers[id].flag;
                     this.setState({allUsers});
                     break;
                 }
@@ -172,7 +173,7 @@ class App extends React.Component{
             personFollowers.includes(userId) ? personFollowers.splice(personFollowers.indexOf(userId),1) : personFollowers.unshift(userId);
             const newPerson = {...this.state.allUsers[personId], followers: personFollowers }
             const allUsers = { ...this.state.allUsers, [personId]: newPerson }
-            localStorage.setItem('currentPerson', JSON.stringify(this.state.allUsers[personId]));
+            localStorage.setItem('currentPerson', JSON.stringify(newPerson));
             this.setState({allUsers});
         }
 
@@ -198,7 +199,7 @@ class App extends React.Component{
                     <Route path="/login">
                         <Login 
                             clickLoginButton={clickLoginButton} 
-                            currentPerson={JSON.parse(localStorage.getItem('currentPerson'))['userEmail']} 
+                            currentPerson={localStorage.getItem('currentPerson') ? JSON.parse(localStorage.getItem('currentPerson'))['userEmail'] : {}} 
                         />
                     </Route>
                     <Route path="/register"><Register clickRegisterButton={clickRegisterButton} /></Route>
