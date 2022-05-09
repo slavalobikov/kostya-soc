@@ -9,14 +9,14 @@ export default function RightbarFollowings(){
         {
             (SF) => (
             <div className="rightbarFollowings">
-                {SF.currentPerson.followers.map(id => 
+                {SF.currentPerson.followers ? SF.currentPerson.followers.map(id => 
                     <NavLink className="usersLinks" to="/user">
                         <div onClick={() => SF.onClickUser(id)} className="rightbarFollowing">
                         <img
                             src={SF.allUsers[id] ? 
-                                SF.allUsers[id].icon ? 
-                                SF.allUsers[id].icon 
-                                : '' 
+                                    SF.allUsers[id].icon ? 
+                                    SF.allUsers[id].icon 
+                                    : '' 
                                 : ''}
 
                             alt=""
@@ -33,7 +33,7 @@ export default function RightbarFollowings(){
                         </span>
                         </div>
                     </NavLink>
-                )}
+                ) : []}
                 </div>
             )
         }

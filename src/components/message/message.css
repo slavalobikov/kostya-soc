@@ -6,6 +6,7 @@
 
 .messageTop{
     display: flex;
+    align-items: center;
 }
 
 .messageImg {
@@ -17,6 +18,7 @@
 }
 
 .messageText{
+    margin: 0;
     padding: 10px;
     border-radius: 20px;
     background-color: #1877f2;
@@ -31,6 +33,7 @@
 
 .message.own{
     align-items: flex-end;
+    margin: 0;
 }
 
 .message.own .messageText{

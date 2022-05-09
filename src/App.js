@@ -16,11 +16,17 @@ class App extends React.Component{
         allUsers: {},
     };
 
+    
+
     componentDidMount(){
         this.ref = base.syncState(`MySoc/allUsers`, {
             context: this,
             state: 'allUsers'
         })
+        // setInterval(function() {
+            
+        //     console.log(new Date);
+        // }, 5000);
     }
 
     componentDidUpdate(){
@@ -50,6 +56,7 @@ class App extends React.Component{
                 icon: '',
                 online: false,
                 followers: [],
+                messages: [],
                 }
             const allUsers = {...this.state.allUsers};
             allUsers[userId] = newPerson;
@@ -177,6 +184,34 @@ class App extends React.Component{
             this.setState({allUsers});
         }
 
+        const onSendClick = (userId, message) => {
+            const localCurrentPerson = JSON.parse(localStorage.getItem('currentPerson'));
+            const personId = localCurrentPerson.userId;
+            const newMesMy = {true: message};
+            const newMesYour = {false: message};
+            const allUsers = { ...this.state.allUsers}
+            let mesArrMy = allUsers[personId].messages ? 
+                            allUsers[personId].messages[userId] ? 
+                            allUsers[personId].messages[userId]
+                            : [] 
+                        : [];
+            let mesArrYour = allUsers[userId].messages ? 
+                                allUsers[userId].messages[personId] ? 
+                                allUsers[userId].messages[personId]
+                                : [] 
+                            : [];
+            mesArrMy.push(newMesMy);
+            mesArrYour.push(newMesYour);
+            const objMesMy = {[userId]: mesArrMy};
+            const objMesYour = {[personId]: mesArrYour};
+            const newPersonMy = {...allUsers[personId], messages: objMesMy};
+            const newPersonYour = {...allUsers[userId], messages: objMesYour};
+            const allUsersNew = {...allUsers, [personId]: newPersonMy, [userId]: newPersonYour};
+            localStorage.setItem('currentPerson', JSON.stringify(newPersonMy));
+            localStorage.setItem('currentUser', JSON.stringify(newPersonYour));
+            this.setState({allUsers: allUsersNew});
+        }
+
         const stateAndFunc = {
             ...this.state,
             currentPerson: JSON.parse(localStorage.getItem('currentPerson')),
@@ -190,13 +225,14 @@ class App extends React.Component{
             onClickInputButton,
             onClickUser,
             followOnUser,
+            onSendClick,
         }
 
         return (
             <StoreContext.Provider value={stateAndFunc}> 
                 <BrowserRouter>
-                    <Route exact path="/"><Home /></Route>
-                    <Route path="/login">
+                    <Route path="/timeline"><Home /></Route>
+                    <Route exact path="/">
                         <Login 
                             clickLoginButton={clickLoginButton} 
                             currentPerson={localStorage.getItem('currentPerson') ? JSON.parse(localStorage.getItem('currentPerson'))['userEmail'] : {}} 

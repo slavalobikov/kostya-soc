@@ -30,7 +30,7 @@ export default function Topbar() {
           <NavLink to="/Profile">
             <span className="topbarLink">Homepage</span>
           </NavLink>
-          <NavLink to="/">
+          <NavLink to="/timeline">
             <span className="topbarLink">Timeline</span>
           </NavLink>
           </div>
@@ -50,7 +50,7 @@ export default function Topbar() {
               <span className="topbarIconBadge">1</span>
             </div>
           </div>
-          <NavLink to="/login">
+          <NavLink to="/">
             <img 
               onClick={SF.onClickTopbarImg} 
               src={SF.currentPerson.icon || (SF.currentPerson.userId && "assets/person/noAvatar.png")} 

@@ -27,7 +27,7 @@ export default function Register(props) {
             <NavLink to="/profile">
               <button onClick={() => props.clickRegisterButton(userName, userEmail, userPassword)} className="loginButton">Sign Up</button>
             </NavLink>
-            <NavLink className="loginRegisterButtonLink" to="/login">
+            <NavLink className="loginRegisterButtonLink" to="/">
               <button className="loginRegisterButton">
                 Log into Account
               </button>

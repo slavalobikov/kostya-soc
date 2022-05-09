@@ -1,16 +1,18 @@
 import React from 'react';
 import "./message.css";
 
-export default function Message() {
+export default function Message({own, message, icon}) {
   return (
-    <div className="message own">
+    <div className={`message ${own && 'own'}`}>
       <div className="messageTop">
-        <img
+        {!own &&
+          <img
           className="messageImg"
-          src="https://images.pexels.com/photos/3686769/pexels-photo-3686769.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
+          src={icon}
           alt=""
-        />
-        <p className="messageText">Kostya</p>
+          />
+        }
+        <p className="messageText">{message}</p>
       </div>
       <div className="messageBottom"></div>
     </div>

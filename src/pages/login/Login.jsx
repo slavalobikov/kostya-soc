@@ -20,7 +20,7 @@ export default function Login(props) {
           <div className="loginBox">
             <input value={userEmail} onChange={e => setUserEmail(e.currentTarget.value)} placeholder="Email" className="loginInput" />
             <input value={userPassword} onChange={e => setUserPassword(e.currentTarget.value)} placeholder="Password" className="loginInput" />
-              <NavLink to={props.currentPerson?"/profile":"/login"}>
+              <NavLink to={props.currentPerson?"/profile":"/"}>
               <button onClick={() => props.clickLoginButton(userEmail, userPassword)}  className="loginButton">Log In</button>
               </NavLink>
             <span className="loginForgot">Forgot Password?</span>
