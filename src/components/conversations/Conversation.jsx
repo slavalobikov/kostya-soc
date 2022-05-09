@@ -9,7 +9,7 @@ export default function Conversation() {
         {
         (SF) => (
           <>
-            {SF.currentPerson.followers.map(id =>
+            {SF.currentPerson.followers && SF.currentPerson.followers.map(id =>
               <div onClick={() => SF.onClickUser(id)} className="conversation">
                 <img
                   className="conversationImg"

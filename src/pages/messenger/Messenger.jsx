@@ -16,9 +16,9 @@ export default function Messenger() {
         (SF) => {
           const followersArr = SF.currentPerson.followers;
           let newFolArr = [];
-          followersArr.map(id => {
+          followersArr ? followersArr.map(id => {
             if(SF.allUsers[id] ? SF.allUsers[id].online ? 1 : 0 : 0) newFolArr.push(SF.allUsers[id]);
-          })
+          }) : newFolArr = [];
 
           const onSendClickNew = () => {
             changeMessage('');
