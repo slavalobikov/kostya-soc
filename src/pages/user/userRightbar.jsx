@@ -1,7 +1,5 @@
 import React, {useState} from 'react';
 import "./userRightbar.css";
-import { Users } from "../../dummyData";
-import Online from "../../components/online/Online";
 import StoreContext from "../../StoreContext";
 import RightbarFollowings from '../../components/rightbarFollowings/RightbarFollowings';
 
@@ -18,9 +16,6 @@ export default function userRightbar(props) {
         <img className="rightbarAd" src="assets/ad.png" alt="" />
         <h4 className="rightbarTitle">Online Friends</h4>
         <ul className="rightbarFriendList">
-          {Users.map((u) => (
-            <Online key={u.id} user={u} />
-          ))}
         </ul>
       </>
     );

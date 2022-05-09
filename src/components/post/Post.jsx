@@ -1,6 +1,5 @@
 import "./post.css";
 import { MoreVert, SdCard } from "@material-ui/icons";
-import { Users } from "../../dummyData";
 import {Room} from "@material-ui/icons"
 import React, { useState } from "react";
 import StoreContext from '../../StoreContext';

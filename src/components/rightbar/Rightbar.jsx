@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import "./rightbar.css";
-import { Users } from "../../dummyData";
 import Online from "../online/Online";
 import StoreContext from "../../StoreContext";
 import RightbarFollowings from "../rightbarFollowings/RightbarFollowings";

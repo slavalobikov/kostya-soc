@@ -7,7 +7,6 @@ import User from "./pages/user/user"
 import { BrowserRouter, Route} from 'react-router-dom';
 import React from 'react'
 import base from './base'
-import { Posts } from "./dummyData";
 import StoreContext from "./StoreContext";
 
 class App extends React.Component{
@@ -46,7 +45,7 @@ class App extends React.Component{
                 userEmail: userEmail,
                 userPassword: userPassword,
                 userId: userId,
-                posts: Posts,
+                posts: [],
                 userName: '',
                 status: '',
                 city: '',
