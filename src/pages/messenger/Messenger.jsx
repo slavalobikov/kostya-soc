@@ -25,7 +25,8 @@ export default function Messenger() {
             SF.onSendClick(SF.currentUser.userId, message)
           }
 
-          const mesArr = SF.currentPerson.messages[SF.currentUser.userId];
+          const userId = SF.currentUser.userId ? SF.currentUser.userId : '';
+          const mesArr = SF.currentPerson.messages ? SF.currentPerson.messages[userId] ? SF.currentPerson.messages[userId] : [] : [];
           
           return(
           <>
