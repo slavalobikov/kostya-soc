@@ -8,7 +8,7 @@ import StoreContext from "../../StoreContext"
 
 export default function Messenger() {
 
-  const[message, changeMessage] = useState('');
+  const[message, changeMessage] = useState(''); 
 
   return (
     <StoreContext.Consumer>
