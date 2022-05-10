@@ -28,7 +28,7 @@ export default function Topbar() {
         <div className="topbarRight">
           <div className="topbarLinks">
           <NavLink to="/Profile">
-            <span className="topbarLink">Homepage</span>
+            <span className="topbarLink homepage">Homepage</span>
           </NavLink>
           <NavLink to="/timeline">
             <span className="topbarLink">Timeline</span>

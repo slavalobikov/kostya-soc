@@ -25,7 +25,7 @@ export default function Messenger() {
             SF.onSendClick(SF.currentUser.userId, message)
           }
 
-          const userId = SF.currentUser.userId ? SF.currentUser.userId : '';
+          const userId = SF.currentUser ? SF.currentUser.userId ? SF.currentUser.userId : '' : '';
           const mesArr = SF.currentPerson.messages ? SF.currentPerson.messages[userId] ? SF.currentPerson.messages[userId] : [] : [];
           
           return(
@@ -56,6 +56,11 @@ export default function Messenger() {
                     </div>
                     <div className="chatBoxBottom">
                       <textarea
+                        onKeyPress={e => {
+                          if(e.key == 'Enter') {
+                          onSendClickNew()
+                          } 
+                        }}
                         value={message}
                         onChange={e => changeMessage(e.currentTarget.value)}
                         className="chatMessageInput"

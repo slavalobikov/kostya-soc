@@ -1,5 +1,6 @@
 {
   "name": "hot-burgers",
+  "homepage": "http://LoraxAVGN.github.io/MySoc",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -27,7 +28,9 @@
     "build": "react-scripts build",
     "eject": "react-scripts eject",
     "styles": "stylus -u autoprefixer-stylus ./src/css/style.styl -o ./src/css/style.css",
-    "styles:watch": "npm run styles -- -w"
+    "styles:watch": "npm run styles -- -w",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -45,6 +48,7 @@
     ]
   },
   "devDependencies": {
-    "concurrently": "^5.0.0"
+    "concurrently": "^5.0.0",
+    "gh-pages": "^4.0.0"
   }
 }

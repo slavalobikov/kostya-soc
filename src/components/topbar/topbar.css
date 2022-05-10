@@ -98,3 +98,7 @@ a{
   object-fit: cover;
   cursor: pointer;
 }
+
+.homepage{
+  padding-left: 10px;
+}

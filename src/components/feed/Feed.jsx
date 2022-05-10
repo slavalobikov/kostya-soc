@@ -14,7 +14,7 @@ export default function Feed(props) {
       {
         let followersPosts = [];
         if(props.home){
-          const followersArr = SF.currentPerson.followers;
+          const followersArr = SF.currentPerson ? SF.currentPerson.followers ? SF.currentPerson.followers : [] : [] ;
           let newFolPosts = [];
           followersArr.map(id => {
             if(SF.allUsers[id] ? SF.allUsers[id].posts ? 1 : 0 : 0) 
