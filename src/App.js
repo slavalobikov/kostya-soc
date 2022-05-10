@@ -236,7 +236,7 @@ class App extends React.Component{
                             clickLoginButton={clickLoginButton} 
                             currentPerson={localStorage.getItem('currentPerson') ? JSON.parse(localStorage.getItem('currentPerson'))['userEmail'] : {}} 
                         />
-                    </Route>
+                    </Route> 
                     <Route path="/register"><Register clickRegisterButton={clickRegisterButton} /></Route>
                     <Route path="/messenger"><Messenger onClickTopbarImg={onClickTopbarImg} /></Route>
                     <Route path="/profile"><Profile /></Route>
