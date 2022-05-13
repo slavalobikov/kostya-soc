@@ -210,25 +210,21 @@ class App extends React.Component{
         }
 
         return (
-            <Login 
+            <StoreContext.Provider value={stateAndFunc}> 
+                <BrowserRouter>
+                    <Route path="/timeline"><Home /></Route>
+                    <Route exact path="/">
+                        <Login 
                             clickLoginButton={clickLoginButton} 
                             currentPerson={localStorage.getItem('currentPerson') ? JSON.parse(localStorage.getItem('currentPerson'))['userEmail'] : {}} 
                         />
-            // <StoreContext.Provider value={stateAndFunc}> 
-            //     <BrowserRouter>
-            //         <Route path="/timeline"><Home /></Route>
-            //         <Route exact path="/">
-            //             <Login 
-            //                 clickLoginButton={clickLoginButton} 
-            //                 currentPerson={localStorage.getItem('currentPerson') ? JSON.parse(localStorage.getItem('currentPerson'))['userEmail'] : {}} 
-            //             />
-            //         </Route> 
-            //         <Route path="/register"><Register clickRegisterButton={clickRegisterButton} /></Route>
-            //         <Route path="/messenger"><Messenger onClickTopbarImg={onClickTopbarImg} /></Route>
-            //         <Route path="/profile"><Profile /></Route>
-            //         <Route path="/user"><User allUsers={this.state.allUsers}/></Route>
-            //     </BrowserRouter>
-            // </StoreContext.Provider>
+                    </Route> 
+                    <Route path="/register"><Register clickRegisterButton={clickRegisterButton} /></Route>
+                    <Route path="/messenger"><Messenger onClickTopbarImg={onClickTopbarImg} /></Route>
+                    <Route path="/profile"><Profile /></Route>
+                    <Route path="/user"><User allUsers={this.state.allUsers}/></Route>
+                </BrowserRouter>
+            </StoreContext.Provider>
           )
     }
 }
