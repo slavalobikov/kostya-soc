@@ -11,115 +11,97 @@ import StoreContext from "./StoreContext";
 
 class App extends React.Component{
 
-    state = {
+    state = {          
+        //инициализация state
         allUsers: {},
     };
 
-    
-
-    componentDidMount(){
+    componentDidMount(){    
+        //синхронизация state и БД
         this.ref = base.syncState(`MySoc/allUsers`, {
             context: this,
             state: 'allUsers'
         })
-        // setInterval(function() {
-            
-        //     console.log(new Date);
-        // }, 5000);
+    }
+
+    componentWillUnmount(){
+        // удаление ссылки на БД
+        base.removeBinding(this.ref);
     }
 
     componentDidUpdate(){
         console.log(this.state)
     }
 
-    componentWillUnmount(){
-        base.removeBinding(this.ref);
-    }
-
     render(){
 
         const clickRegisterButton = (userName, userEmail, userPassword) => {
-            const userId = new Date().valueOf();
-            const newPerson = {
-                userName: userName,
-                userEmail: userEmail,
-                userPassword: userPassword,
-                userId: userId,
-                posts: [],
-                userName: '',
-                status: '',
-                city: '',
-                country: '',
-                relationship: '',
-                coverUrl: '',
-                icon: '',
-                online: false,
-                followers: [],
-                messages: [],
+            const userId = new Date().valueOf(); // создание уникального Id
+            const newPerson = {                  // присваивание начального значения нового пользователя
+                userName: userName, userEmail: userEmail, userPassword: userPassword, userId: userId,
+                posts: [], userName: '', status: '', city: '', country: '', relationship: '',
+                coverUrl: '', icon: '', online: true, followers: [], messages: [],
                 }
-            const allUsers = {...this.state.allUsers};
-            allUsers[userId] = newPerson;
-            allUsers[userId].online = true;
-            this.setState({allUsers});
-            const currentPerson = {...newPerson};
-            localStorage.setItem('currentPerson', JSON.stringify(currentPerson));
+            const allUsers = {...this.state.allUsers};  // создание копии state allUsers
+            allUsers[userId] = newPerson;               // добавление нового пользователя в копию
+            this.setState({allUsers});                  // изменение state компоненты App
+            // добавление текущего пользователя в локальное хранилище
+            localStorage.setItem('currentPerson', JSON.stringify({...newPerson}));
         }
 
-        // double click to enter!!!
         const clickLoginButton = (thisUserEmail, thisUserPassword) => {
-            const users = this.state.allUsers;
-            let loginFlag = true;
-            for (var id in users) {
+            const users = this.state.allUsers; // создание объекта со всеми текущими пользователями
+            let loginFlag = true;              // создание переменной (флага) для проверки совпадения
+            for (var id in users) {            // начало цикла проверки совпадения
+                // если находится совпадение выполнится код условия
                 if(users[id]['userEmail'] == thisUserEmail && users[id]['userPassword'] == thisUserPassword){
-                    loginFlag = false;
-                    const currentPerson = {...users[id]};
-                    console.log('currentPerson - ', currentPerson);
-                    localStorage.setItem('currentPerson', JSON.stringify(currentPerson));
-                    const allUsers = {...this.state.allUsers};
-                    allUsers[id].online = true;
-                    allUsers[id].flag = !allUsers[id].flag;
-                    this.setState({allUsers});
-                    break;
+                    loginFlag = false;  // изменение флага совпадения
+                    const currentPerson = {...users[id]};  // создание копии совпадающего пользователя 
+                    // установка копии в локальное хранилище
+                    localStorage.setItem('currentPerson', JSON.stringify(currentPerson)); 
+                    const allUsers = {...this.state.allUsers}; // создание копии state allUsers
+                    allUsers[id].online = true;                // изменение параметра online
+                    allUsers[id].flag = !allUsers[id].flag;    // изменение параметра flag
+                    this.setState({allUsers});                 // изменение state компоненты App
+                    break;                                     // выход из цикла
                 }
             }
+            // если совпадений не нашлось, то выводим текст оповещения
             if(loginFlag){
-                alert('Email или Password введен неправильно...')
+                alert('Email или Password введен неверно...') // оповещение
             }
         }
 
         const onClickTopbarImg = () => {
+            // получение информации о текущем пользователе
             const localCurrentPerson = JSON.parse(localStorage.getItem('currentPerson'));
-            const userId = localCurrentPerson.userId;
-            const currentPerson = {};
+            const userId = localCurrentPerson.userId;  // получение Id текущего пользователя
+            const currentPerson = {};   // создание объекта пустого пользователя
+            // изменение действующего пользователя на пустого в локальном хранилище
             localStorage.setItem('currentPerson', JSON.stringify(currentPerson));
-            const allUsers = {...this.state.allUsers};
-            allUsers[userId].online = false;
-            this.setState({allUsers});
+            const allUsers = {...this.state.allUsers};  // создание копии state allUsers
+            allUsers[userId].online = false;  // изменение параметра online 
+            this.setState({allUsers});  // изменение state компоненты App
         }
 
         const onClickShare = (desc, img, location) => {
+            // получение информации о текущем пользователе
             const localCurrentPerson = JSON.parse(localStorage.getItem('currentPerson'));
-            const userId = localCurrentPerson.userId;
-            let date = new Date();
-            const newDate = (date.getMonth()+1)+"."+date.getDate()+"."+date.getFullYear()+" "+date.getHours()+":"+date.getMinutes();
-            const newPost = {
-                comment: 0,
-                date: newDate,
-                desc: desc,
-                id: userId,
-                like: 0,
-                photo: img,
-                userId: userId,
-                location: location,
-                posts: [],
+            const userId = localCurrentPerson.userId;  // получение Id текущего пользователя
+            let date = new Date();  // создание переменной текущей даты и времени
+            // создание строки даты и времени опубликования поста
+            const newDate = (date.getMonth()+1)+"."+date.getDate()+"."+date.getFullYear()+" "+date.getHours()+":"+date.getMinutes(); 
+            const newPost = {  // создание объекта нового поста
+                comment: 0, date: newDate, desc: desc, id: userId, like: 0,
+                photo: img, userId: userId, location: location, posts: [],
             }
-            let copyPosts = this.state.allUsers[userId].posts;
-            copyPosts ? copyPosts.unshift(newPost) : copyPosts = [newPost];
-            let allUsers = {...this.state.allUsers}
-            allUsers[userId].posts = copyPosts;
-            this.setState({allUsers});
-            const currentPerson = this.state.allUsers[userId];
-            localStorage.setItem('currentPerson', JSON.stringify(currentPerson));
+            let copyPosts = this.state.allUsers[userId].posts;  // создание копии всех постов пользователя
+            copyPosts ? copyPosts.unshift(newPost) : copyPosts = [newPost];  // добавление поста
+            let allUsers = {...this.state.allUsers};  // создание копии state allUsers
+            allUsers[userId].posts = copyPosts;  // изменение параметра posts в копии allUsers
+            this.setState({allUsers});  // изменение state компоненты App
+            const currentPerson = this.state.allUsers[userId];  // создание копии текущего пользователя
+            localStorage.setItem('currentPerson', JSON.stringify(currentPerson)); // изменение localStorage
         }
 
         const onClickDelBut = (e) => {
@@ -228,21 +210,25 @@ class App extends React.Component{
         }
 
         return (
-            <StoreContext.Provider value={stateAndFunc}> 
-                <BrowserRouter>
-                    <Route path="/timeline"><Home /></Route>
-                    <Route exact path="/">
-                        <Login 
+            <Login 
                             clickLoginButton={clickLoginButton} 
                             currentPerson={localStorage.getItem('currentPerson') ? JSON.parse(localStorage.getItem('currentPerson'))['userEmail'] : {}} 
                         />
-                    </Route> 
-                    <Route path="/register"><Register clickRegisterButton={clickRegisterButton} /></Route>
-                    <Route path="/messenger"><Messenger onClickTopbarImg={onClickTopbarImg} /></Route>
-                    <Route path="/profile"><Profile /></Route>
-                    <Route path="/user"><User allUsers={this.state.allUsers}/></Route>
-                </BrowserRouter>
-            </StoreContext.Provider>
+            // <StoreContext.Provider value={stateAndFunc}> 
+            //     <BrowserRouter>
+            //         <Route path="/timeline"><Home /></Route>
+            //         <Route exact path="/">
+            //             <Login 
+            //                 clickLoginButton={clickLoginButton} 
+            //                 currentPerson={localStorage.getItem('currentPerson') ? JSON.parse(localStorage.getItem('currentPerson'))['userEmail'] : {}} 
+            //             />
+            //         </Route> 
+            //         <Route path="/register"><Register clickRegisterButton={clickRegisterButton} /></Route>
+            //         <Route path="/messenger"><Messenger onClickTopbarImg={onClickTopbarImg} /></Route>
+            //         <Route path="/profile"><Profile /></Route>
+            //         <Route path="/user"><User allUsers={this.state.allUsers}/></Route>
+            //     </BrowserRouter>
+            // </StoreContext.Provider>
           )
     }
 }

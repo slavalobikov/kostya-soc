@@ -22,7 +22,7 @@ export default function Rightbar(props) {
               <div className="birthdayContainer">
                 <img className="birthdayImg" src="assets/gift.png" alt="" />
                 <span className="birthdayText">
-                  <b>Pola Foster</b> and <b>3 other friends</b> have a birthday today.
+                  <b>Lera Savinova</b> have a birthday today.
                 </span>
               </div>
               <img className="rightbarAd" src="assets/ad.png" alt="" />
