@@ -210,7 +210,7 @@ class App extends React.Component{
         }
 
         return (
-            <>Hello world</>
+            <>Hello world!</>
             // <StoreContext.Provider value={stateAndFunc}> 
             //     <BrowserRouter>
             //         <Route path="/timeline"><Home /></Route>
